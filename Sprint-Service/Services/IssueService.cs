@@ -31,6 +31,8 @@ public class IssueService : IIssueService
 
         if (issue == null) return null!;
 
+        issue.Title = updatedIssue.Title;
+        issue.IssueStatus = updatedIssue.IssueStatus;
         issue.IssueType = updatedIssue.IssueType;
         
         await _issueRepository.Update(issue);
