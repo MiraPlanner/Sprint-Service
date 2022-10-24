@@ -8,25 +8,36 @@ namespace Sprint_Service.Services;
 public class SprintService : ISprintService
 {
     private readonly IRepository<Sprint> _sprintRepository;
+    private readonly IIssueService _issueService;
 
-    public SprintService(IRepository<Sprint> sprintRepository)
+    public SprintService(IRepository<Sprint> sprintRepository, IIssueService issueService)
     {
         _sprintRepository = sprintRepository;
+        _issueService = issueService;
     }
     
     public async Task<IEnumerable<SprintDto>> GetAll()
     {
-        var sprints = (await _sprintRepository.GetAll()).Select(sprint => sprint.AsDto());
-
-        return sprints;
+        var sprints = (await _sprintRepository.GetAll());
+        var sprintDtos = new List<SprintDto>();
+        
+        foreach (var sprint in sprints.ToList())
+        {
+            sprint.Issues =  await _issueService.GetBySprintId(sprint.Id);
+            sprintDtos.Add(sprint.AsDto());
+        }
+        
+        return sprintDtos;
     }
 
     public async Task<SprintDto> GetById(Guid id)
     {
         var sprint = await _sprintRepository.Get(id);
+        var issues = await _issueService.GetBySprintId(id);
 
         if (sprint == null) return null!;
-        
+        sprint.Issues = issues;
+
         return sprint.AsDto();
     }
 

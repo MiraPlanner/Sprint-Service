@@ -1,4 +1,6 @@
-﻿using Mira_Common;
+﻿using System.Linq.Expressions;
+using Mira_Common;
+using MongoDB.Driver;
 using Sprint_Service.Interfaces;
 using Sprint_Service.Models;
 
@@ -13,9 +15,13 @@ public class IssueService : IIssueService
         _issueRepository = issueRepository;
     }
     
-    public Task<Issue> GetBySprintId(Guid sprintId)
+    public async Task<IEnumerable<Issue>> GetBySprintId(Guid sprintId)
     {
-        throw new NotImplementedException();
+        Expression<Func<Issue, bool>> filter = i => i.SprintId == sprintId;
+        
+        var sprints = await _issueRepository.GetAll(filter);
+
+        return sprints;
     }
 
     public async Task<Issue> Create(Issue issue)
@@ -31,6 +37,7 @@ public class IssueService : IIssueService
 
         if (issue == null) return null!;
 
+        issue.SprintId = updatedIssue.SprintId;
         issue.Title = updatedIssue.Title;
         issue.IssueStatus = updatedIssue.IssueStatus;
         issue.IssueType = updatedIssue.IssueType;
@@ -40,7 +47,7 @@ public class IssueService : IIssueService
         return issue;
     }
 
-    public async Task<Issue> Delete(Guid id)
+    public async Task<Issue?> Delete(Guid id)
     {
         var issue = await _issueRepository.Get(id);
 

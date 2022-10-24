@@ -9,7 +9,7 @@ namespace Sprint_Service.Controllers;
 public class SprintController : ControllerBase
 {
     private readonly ISprintService _sprintService;
-   
+
     public SprintController(ISprintService sprintService)
     {
         _sprintService = sprintService;
@@ -29,7 +29,7 @@ public class SprintController : ControllerBase
         var sprint = await _sprintService.GetById(id);
 
         if (sprint == null) return NotFound();
-
+        
         return Ok(sprint);
     }
 
