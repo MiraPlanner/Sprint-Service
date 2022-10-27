@@ -11,6 +11,18 @@ services:
     volumes: 
       - mongodbdata:/data/db/sprint
 
+  sprint-service:
+    container_name: sprint-service
+    build:
+      context: .
+      dockerfile: Sprint-Service/Dockerfile
+    ports:
+      - 5005:80
+    networks:
+      - default
+    environment:
+      ASPNETCORE_ENVIRONMENT: Staging
+
 networks:
   default:
     name: swsp
