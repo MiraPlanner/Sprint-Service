@@ -15,13 +15,20 @@ public class IssueService : IIssueService
         _issueRepository = issueRepository;
     }
     
+    public Task<Issue> Get(Guid id)
+    {
+        var issue = _issueRepository.Get(id);
+
+        return issue;
+    }
+    
     public async Task<IEnumerable<Issue>> GetBySprintId(Guid sprintId)
     {
         Expression<Func<Issue, bool>> filter = i => i.SprintId == sprintId;
         
-        var sprints = await _issueRepository.GetAll(filter);
+        var issues = await _issueRepository.GetAll(filter);
 
-        return sprints;
+        return issues;
     }
 
     public async Task<Issue> Create(Issue issue)
