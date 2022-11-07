@@ -1,3 +1,4 @@
+using Mira_Common.MassTransit;
 using Mira_Common.MongoDB;
 using Sprint_Service.Interfaces;
 using Sprint_Service.Models;
@@ -15,7 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddMongo()
     .AddMongoRepository<Sprint>("sprints")
-    .AddMongoRepository<Issue>("issues");
+    .AddMongoRepository<Issue>("issues")
+    .AddMassTransitWithRabbitMq(); 
 
 builder.Services.AddTransient<ISprintService, SprintService>();
 builder.Services.AddTransient<IIssueService, IssueService>();

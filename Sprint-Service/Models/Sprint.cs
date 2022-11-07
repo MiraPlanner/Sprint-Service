@@ -10,11 +10,12 @@ public class Sprint : IEntity
     public string? Goal { get; set; }
     public DateTimeOffset? StartDate { get; set; }
     public DateTimeOffset? EndDate { get; set; }
+    public IEnumerable<Issue>? Issues { get; set; }
     
     public SprintDto AsDto()
     {
         return new SprintDto(
-            Id, Name, Goal, StartDate, EndDate
+            Id, Name, Goal, StartDate, EndDate, Issues
         );
     }
 }
