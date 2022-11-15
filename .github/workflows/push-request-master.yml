@@ -27,13 +27,13 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish Issue-Service/Issue-Service.csproj -c Release -o release --nologo
+        run: dotnet publish Sprint-Service/Sprint-Service.csproj -c Release -o release --nologo
 
       - name: Persist workflow data as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: issue-artifact
-          path: /home/runner/work/Issue-Service/Issue-Service/release/
+          name: sprint-artifact
+          path: /home/runner/work/Sprint-Service/Sprint-Service/release/
   
   analyse:
     name: Unit Tests
@@ -46,8 +46,8 @@ jobs:
       - name: Download workflow data
         uses: actions/download-artifact@v3
         with:
-          name: issue-artifact
-          path: /home/runner/work/Issue-Service/Issue-Service/release/
+          name: sprint-artifact
+          path: /home/runner/work/Sprint-Service/Sprint-Service/release/
 
       - name: Test
         run: dotnet test --no-restore --verbosity normal
@@ -95,8 +95,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"MiraPlanner_Issue-Service" /o:"miraplanner" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build Issue-Service.sln
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"MiraPlanner_Sprint-Service" /o:"miraplanner" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build Sprint-Service.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
   
   
@@ -130,7 +130,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          file: ./Issue-Service/Dockerfile
+          file: ./Sprint-Service/Dockerfile
           tags: ${{steps.meta.outputs.tags}}
           labels: ${{steps.meta.output.labels}}
 
