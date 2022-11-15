@@ -9,7 +9,7 @@ services:
     ports: 
       - "27018:27017"
     volumes: 
-      - mongodbdata:/data/db/sprint
+      - mongodbdata:/data/db
 
   sprint-service:
     container_name: sprint-service
