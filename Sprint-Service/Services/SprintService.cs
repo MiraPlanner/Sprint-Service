@@ -56,16 +56,16 @@ public class SprintService : ISprintService
         return sprint.AsDto();
     }
 
-    public async Task<SprintDto?> Update(Guid id, UpdateSprintDto updateIssueDto)
+    public async Task<SprintDto?> Update(Guid id, UpdateSprintDto updateSprintDto)
     {
         var sprint = await _sprintRepository.Get(id);
 
         if (sprint == null) return null!;
 
-        sprint.Name = updateIssueDto.Name;
-        sprint.Goal = updateIssueDto.Goal;
-        sprint.StartDate = updateIssueDto.StartDate;
-        sprint.EndDate = updateIssueDto.EndDate;
+        sprint.Name = updateSprintDto.Name;
+        sprint.Goal = updateSprintDto.Goal;
+        sprint.StartDate = updateSprintDto.StartDate;
+        sprint.EndDate = updateSprintDto.EndDate;
         
         await _sprintRepository.Update(sprint);
 

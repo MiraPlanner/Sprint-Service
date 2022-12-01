@@ -4,7 +4,7 @@ namespace Sprint_Service.Dtos;
 
 public record SprintDto(
     Guid Id, 
-    string Name, 
+    string? Name, 
     string? Goal, 
     DateTimeOffset? StartDate,
     DateTimeOffset? EndDate,
