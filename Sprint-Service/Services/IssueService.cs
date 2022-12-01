@@ -38,20 +38,20 @@ public class IssueService : IIssueService
         return issue;
     }
 
-    public async Task<Issue> Update(Guid id, Issue updatedIssue)
+    public async Task<Issue> Update(Guid id, Issue issue)
     {
-        var issue = await _issueRepository.Get(id);
+        var existingIssue = await _issueRepository.Get(id);
 
-        if (issue == null) return null!;
+        if (existingIssue == null) return null!;
 
-        issue.SprintId = updatedIssue.SprintId;
-        issue.Title = updatedIssue.Title;
-        issue.IssueStatus = updatedIssue.IssueStatus;
-        issue.IssueType = updatedIssue.IssueType;
+        existingIssue.SprintId = issue.SprintId;
+        existingIssue.Title = issue.Title;
+        existingIssue.IssueStatus = issue.IssueStatus;
+        existingIssue.IssueType = issue.IssueType;
         
-        await _issueRepository.Update(issue);
+        await _issueRepository.Update(existingIssue);
 
-        return issue;
+        return existingIssue;
     }
 
     public async Task<Issue?> Delete(Guid id)
