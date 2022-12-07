@@ -6,7 +6,7 @@ using Sprint_Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var allowedHosts = builder.Configuration.GetSection("AllowedHosts").Value.Split(";");
+var allowedOrigins = builder.Configuration.GetSection("AllowedHosts").Value.Split(";");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(c => c
-    .WithOrigins(allowedHosts)
+    .WithOrigins(allowedOrigins)
     .AllowAnyHeader()
     .AllowAnyMethod());
 
