@@ -6,8 +6,9 @@ using Sprint_Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var allowedHosts = builder.Configuration.GetSection("AllowedHosts").Value.Split(";");
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +33,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(c => c
+    .WithOrigins(allowedHosts)
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 
 app.UseAuthorization();
 
