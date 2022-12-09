@@ -40,7 +40,8 @@ public class IssueUpdatedConsumer : IConsumer<IssueUpdated>
             issue.Title = message.Title;
             issue.IssueStatus = message.IssueStatus;
             issue.IssueType = message.IssueType;
+            
+            await _issueService.Update(issue.Id, issue);
         }
-       
     }
 }
