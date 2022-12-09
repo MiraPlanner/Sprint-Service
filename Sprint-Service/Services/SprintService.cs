@@ -48,7 +48,7 @@ public class SprintService : ISprintService
             Name = createSprintDto.Name,
             Goal = createSprintDto.Goal,
             StartDate = createSprintDto.StartDate,
-            EndDate = createSprintDto.StartDate
+            EndDate = createSprintDto.EndDate
         };
 
         await _sprintRepository.Create(sprint);
