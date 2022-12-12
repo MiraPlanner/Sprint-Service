@@ -8,5 +8,7 @@ public record SprintDto(
     string? Goal, 
     DateTimeOffset? StartDate,
     DateTimeOffset? EndDate,
-    IEnumerable<Issue>? Issues
+    IEnumerable<Issue>? Issues,
+    DateTimeOffset CreatedAt, 
+    DateTimeOffset UpdatedAt
 );

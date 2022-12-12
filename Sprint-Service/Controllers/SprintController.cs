@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sprint_Service.Dtos;
 using Sprint_Service.Interfaces;
+using Sprint_Service.Models;
 
 namespace Sprint_Service.Controllers;
 
@@ -19,6 +20,14 @@ public class SprintController : ControllerBase
     public async Task<ActionResult<IEnumerable<SprintDto>>> GetAll()
     {
         var sprints = await _sprintService.GetAll();
+
+        return Ok(sprints);
+    }
+    
+    [HttpGet("/backlog")]
+    public async Task<ActionResult<IEnumerable<Issue>>> GetBacklog()
+    {
+        var sprints = await _sprintService.GetBacklog();
 
         return Ok(sprints);
     }

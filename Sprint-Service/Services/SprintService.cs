@@ -23,11 +23,17 @@ public class SprintService : ISprintService
         
         foreach (var sprint in sprints.ToList())
         {
-            sprint.Issues =  await _issueService.GetBySprintId(sprint.Id);
+            sprint.Issues = await _issueService.GetBySprintId(sprint.Id);
             sprintDtos.Add(sprint.AsDto());
         }
-        
         return sprintDtos;
+    }
+    
+    public async Task<IEnumerable<Issue>> GetBacklog()
+    {
+        var backlogIssues = await _issueService.GetBySprintId(null);
+
+        return backlogIssues;
     }
 
     public async Task<SprintDto> GetById(Guid id)
@@ -48,7 +54,9 @@ public class SprintService : ISprintService
             Name = createSprintDto.Name,
             Goal = createSprintDto.Goal,
             StartDate = createSprintDto.StartDate,
-            EndDate = createSprintDto.EndDate
+            EndDate = createSprintDto.EndDate,
+            CreatedAt = DateTimeOffset.Now,
+            UpdatedAt = DateTimeOffset.Now
         };
 
         await _sprintRepository.Create(sprint);
@@ -66,6 +74,7 @@ public class SprintService : ISprintService
         sprint.Goal = updateSprintDto.Goal;
         sprint.StartDate = updateSprintDto.StartDate;
         sprint.EndDate = updateSprintDto.EndDate;
+        sprint.UpdatedAt = DateTimeOffset.Now;
         
         await _sprintRepository.Update(sprint);
 
