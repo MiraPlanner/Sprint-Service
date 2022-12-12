@@ -22,7 +22,7 @@ public class IssueService : IIssueService
         return issue;
     }
     
-    public async Task<IEnumerable<Issue>> GetBySprintId(Guid sprintId)
+    public async Task<IEnumerable<Issue>> GetBySprintId(Guid? sprintId)
     {
         Expression<Func<Issue, bool>> filter = i => i.SprintId == sprintId;
         
