@@ -24,7 +24,7 @@ public class SprintController : ControllerBase
         return Ok(sprints);
     }
     
-    [HttpGet("/backlog")]
+    [HttpGet("backlog")]
     public async Task<ActionResult<IEnumerable<Issue>>> GetBacklog()
     {
         var issues = await _sprintService.GetBacklog();
